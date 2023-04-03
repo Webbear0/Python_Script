@@ -19,7 +19,7 @@ class bank:
     def __init__(self,card_name,card_password,card_money):
         self.db_conn = pymysql.connect(host='', user='', 
                                        password="", db="",
-                                         charset="", port=) # 数据库连接参数
+                                         charset="", port=) # 数据库连接参数,修改后使用
         self.card_name = card_name
         self.card_password = card_password
         self.card_money = card_money
