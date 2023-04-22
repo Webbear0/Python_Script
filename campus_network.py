@@ -32,6 +32,7 @@ class campus_network:
         cr.close()
         db_conn.close()
         print(f"数据库 {database}@{host} 初始化成功")
+        self.database = database
         self.db_conn = pymysql.connect(host=host, user=user, password=password, db=database, charset="utf8", port=3306)
 
     def create_user(self):
@@ -42,48 +43,51 @@ class campus_network:
             print("输入的值不能为空")
         elif (len(user_name) <= 9) or (len(user_password) <= 17):
             cr = self.db_conn.cursor()
-            create_sql = f"insert ignore into `{database_name}`(`user_name`,`user_password`)values ('{user_name}','{user_password}');"
-            try: # 用户注册判断
+            search_sql = f"select user_name from `{self.database}` \
+            where user_name='{user_name}' and user_password='{user_password}';"
+            try: # 查询数据库中账号密码是否对应
+                cr.execute(search_sql)
+                result=cr.execute(search_sql)
+            except Exception as error:
+                print(f"查询错误{error}")
+                exit(1)
+            if str(result) == "1" :
+                print(f"\n用户 {user_name} 已存在")
+                cr.close()
+            elif str(result) == "0":
+                create_sql = f"insert ignore into `{self.database}`(`user_name`,`user_password`)values ('{user_name}','{user_password}');"
                 cr.execute(create_sql)
                 self.db_conn.commit()
-            except Exception as error:
-                if str(error)[1] == "0":
-                    print(f"注册失败，用户已经注册过了 错误代码 {str(error)[1]}")
-                    cr.close()
-                    exit(1)
-                else:
-                    print(f"未知错误 错误代码 {error}")
-                    cr.close()
-                    exit(1)
-            cr.close()
-            self.db_conn.close()
-            print("注册成功")
+                cr.close()
+                self.db_conn.close()
+                print("注册成功") 
+            else:
+                print(f"未知错误{result}")
         else:
             print('输入的值错误，请重新输入')
 
     def login_user(self):
         print("\n————登录系统————")
+        result = 2
         user_name = input('请输入用户名:')
         user_password = input('请输入密码:')
         cr = self.db_conn.cursor()
-        search_sql = f"select user_name from `{database_name}` \
+        search_sql = f"select user_name from `{self.database}` \
             where user_name='{user_name}' and user_password='{user_password}';"
         try: # 查询数据库中账号密码是否对应
             cr.execute(search_sql)
-            result = cr.fetchall()
+            result=cr.execute(search_sql)
         except Exception as error:
-            if str(error)[1] == "0":
-                print('用户不存在')
-                print(f"用户{user_name}不存在 错误代码 {str(error)[1]}")
-                cr.close()
-                exit(1)
-            else:
-                print(f"未知错误 错误代码 {error}")
-                cr.close()
-                exit(1)
-        print(f"\n用户 {user_name} 登录成功")
+            print(f"查询错误{error}")
+        if str(result) == "0" :
+            print(f"\n用户 {user_name} 不存在请重新输入")
+        elif str(result) == "1":
+            print(f"\n用户 {user_name} 登录成功")
+        else:
+            print("未知错误")
+            cr.close()
+            exit(1)
         cr.close()
-        self.db_conn.close()
 
 if __name__ == '__main__':
     database_name = input("请输入连接的数据库名：")
