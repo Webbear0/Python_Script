@@ -29,6 +29,8 @@ def ssh(hostname, username, password, ):
 
 def sftp(hostname, username, password):
     # 第一步 新建会话
+    src_file = input("请输入源文件的文件路径：")
+    dst_file = input("请输入目的的文件路径：")
     try:
         SSH_transport = paramiko.Transport(hostname, 22)
     except Exception as error:
@@ -46,11 +48,12 @@ def sftp(hostname, username, password):
     # 第三步 创建客户端
     ssh_SFTP = paramiko.SFTPClient.from_transport(SSH_transport)
     # 第四步 上传文件
-    #    ssh_SFTP.put(r'd:\test549.txt', '/mnt/test549.txt')
+    #ssh_SFTP.put(src_file, dst_file)
     # 第五步 改名
-    #    ssh_SFTP.rename('/mnt/test549.txt', '/mnt/test60549.txt')
+    #ssh_SFTP.rename(src_file, dst_file)
     # 第六步 下载文件
-    #    ssh_SFTP.get('/mnt/test60549.txt', r'd:\wangke.txt')
+    #ssh_SFTP.get(dst_file, src_file)
+    print("操作成功")
     SSH_transport.close()
 
 
