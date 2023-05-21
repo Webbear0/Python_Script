@@ -1,8 +1,10 @@
 #coding=utf-8
 # 功能: 爬取喜马拉雅
 # 创建者：俺
+
 import re
 import requests
+
 url="https://www.ximalaya.com/album/6233693"
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \
          AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'} # 模拟浏览器
