@@ -1,8 +1,6 @@
-# coding=utf-8
-# coding=utf-8
+#coding=utf-8
 # 功能：通过python程序 远程执行命令
 # 编写者：俺
-# 时间：2023年4月23日
 
 import paramiko, time
 

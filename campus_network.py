@@ -1,7 +1,7 @@
-# coding=utf-8
+#coding=utf-8
 # 功能：模拟数字校园的 注册 和 登录 功能，用数据库存放注册的用户名和密码
 # 编写者：俺
-# 时间：2023年4月10日
+
 import pymysql
 
 class campus_network:
