@@ -10,7 +10,11 @@ def ximalaya(book_id):
     response=requests.get(url=url, headers=headers)
     audia_info=re.findall('"trackId":(\d+),"isPaid":false,"tag":0,"title":"(.*?)","playCount"', response.text)
     os.makedirs(f"ximalaya\\{book_id}")
-    
+    try:
+        os.makedirs(f"ximalaya\\{book_id}")
+    except Exception as e:
+        print(f"{book_id} 文件夹已存在\n{e}") 
+        
     for id,title in audia_info:
         link = 'https://www.ximalaya.com/revision/play/v1/audio?id='+id+'&ptype=1'
         try:
@@ -23,7 +27,7 @@ def ximalaya(book_id):
         except Exception as e:
             print(f"{title} 下载失败 原因：\n{e}")
             continue
-        print(f"{book_id}下载完成")
+    print(f"{book_id}下载完成")
 
 if __name__ == "__main__" :
     bookid = int(input("请输入节目号(节目的url里有)\n:"))
