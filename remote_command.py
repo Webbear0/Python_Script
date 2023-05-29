@@ -1,8 +1,7 @@
 #coding=utf-8
 # 功能：通过python程序 远程执行命令
 # 编写者：俺
-
-import paramiko, time
+import paramiko,time
 
 def ssh(hostname, username, password, ):
     command = input('请输入需要执行的命令:')
