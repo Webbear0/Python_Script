@@ -2,11 +2,7 @@
 # 功能: 爬取蜻蜓fm
 # 创建者：俺
 
-import hmac
-import time
-import requests
-import re
-import os
+import hmac,time,requests,re,os
 # 导入以上模块，由于蜻蜓做了反爬需要hmac库解密hmacMD5
 
 def qingting(book_id,page,access_token,qingting_id) :
