@@ -3,8 +3,7 @@
 # 创建者：俺
 
 import jieba.posseg as pseg
-import wordcloud
-import tkinter
+import wordcloud,tkinter
 from PIL import Image, ImageTk
 
 file_name = input('请输入需要转换的文件名:')
