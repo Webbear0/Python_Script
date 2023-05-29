@@ -11,7 +11,10 @@ def qingting(book_id,page,access_token,qingting_id) :
     base_url = "https://audio.qingting.fm"
     access_token = access_token  # 没有登录可以为空，不影响
     qingting_id = qingting_id # 没有id可以为空，不影响
-    os.makedirs(f"FM\\{book_id}")
+    try:
+        os.makedirs(f"FM\\{book_id}")
+    except Exception as e:
+        print(f"{book_id} 文件夹已存在\n{e}")
 
     for page in range(1,page+1):
         url=f'https://www.qingting.fm/channels/{book_id}/{page}'
