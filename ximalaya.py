@@ -13,13 +13,17 @@ def ximalaya(book_id):
     
     for id,title in audia_info:
         link = 'https://www.ximalaya.com/revision/play/v1/audio?id='+id+'&ptype=1'
-        audia_content = requests.get(url=link, headers=headers)
-        audia_url = audia_content.json()['data']['src'] # 播放地址
-        audio = requests.get(url=audia_url,headers=headers).content
-        with open(f'ximalaya\\{book_id}\\' + title + '.mp3' , 'wb') as f:
-            f.write(audio)
-        print(f"正在下载{title}")
-    print(f"{book_id}下载完成")
+        try:
+            audia_content = requests.get(url=link, headers=headers)
+            audia_url = audia_content.json()['data']['src'] # 播放地址
+            audio = requests.get(url=audia_url,headers=headers).content
+            print(f"正在下载{title}")
+            with open(f'ximalaya\\{book_id}\\' + title + '.mp3' , 'wb') as f:
+                f.write(audio)
+        except Exception as e:
+            print(f"{title} 下载失败 原因：\n{e}")
+            continue
+        print(f"{book_id}下载完成")
 
 if __name__ == "__main__" :
     bookid = int(input("请输入节目号(节目的url里有)\n:"))

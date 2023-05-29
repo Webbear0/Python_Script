@@ -20,18 +20,22 @@ def qingting(book_id,page,access_token,qingting_id) :
         # 爬取多页结果 保存到变量
         for id,title in audio_id:
             timestamp = str(round(time.time()*1000))
+            # 获取下载链接
             data = f"/audiostream/redirect/{book_id}/{id}?access_token={access_token}&device_id=MOBILESITE&qingting_id={qingting_id}&t={timestamp}"
             message = data.encode('utf-8')
             key = "fpMn12&38f_2e".encode('utf-8') # 这个密钥是固定的，直接写在js的生成sign函数里面，搜索就能找到
             sign = hmac.new(key, message, digestmod='MD5').hexdigest() # 使用hmac库解密，密钥就是上面那个
             whole_url = base_url+data+"&sign="+sign
-            audio=requests.get(url=whole_url,headers=headers).content
-            # 获取下载链接
-            with open(f'FM\\{book_id}\\'+title+'.mp3','wb') as f:
-                f.write(audio)
             print(f'正在下载:{title}......')
-            # 按照节目号保存到文件夹 重命名为节目名称.mp3
-        print(f'第{page}页内容下载完成......')
+            try:
+                audio=requests.get(url=whole_url,headers=headers).content
+                with open(f'FM\\{book_id}\\'+title+'.mp3','wb') as f:
+                    f.write(audio)
+                # 按照节目号保存到文件夹 重命名为节目名称.mp3
+            except Exception as e:
+                print(f"{title} 下载失败 原因：\n{e}")
+                continue
+        print(f'{book_id} 下载完成......')
 
 if __name__ == "__main__" :
     bookid = int(input("请输入节目号(节目的url里有)\n:"))
