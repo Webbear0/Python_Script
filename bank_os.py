@@ -1,7 +1,6 @@
 #coding=utf-8
 # 功能：实现银行业务开户、销户、存款、取款和查询余额等功能
 # 编写者：俺
-
 import pymysql
 
 class bank:
