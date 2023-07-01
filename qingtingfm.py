@@ -38,7 +38,7 @@ def qingting(book_id,page,access_token,qingting_id) :
             except Exception as e:
                 print(f"{title} 下载失败 原因：\n{e}")
                 continue
-        print(f'{book_id} 下载完成......')
+        print(f'{book_id} 第{page}页 下载完成......')
 
 if __name__ == "__main__" :
     bookid = int(input("请输入节目号(节目的url里有)\n:"))
