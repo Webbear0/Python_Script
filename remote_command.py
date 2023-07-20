@@ -1,5 +1,5 @@
 #coding=utf-8
-# 功能：通过python程序 远程执行命令
+# 功能：通过python程序远程执行命令
 # 编写者：俺
 import paramiko,time
 
