@@ -1,6 +1,6 @@
 #coding=utf-8
 # 功能：通过python程序远程执行命令
-# 编写者：俺
+# 日期：2023年6月6日
 import paramiko,time
 
 def ssh(hostname, username, password):

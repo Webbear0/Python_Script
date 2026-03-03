@@ -1,6 +1,6 @@
 #coding=utf-8
 # 功能: 提取关键字，生成词云
-# 创建者：俺
+
 
 import jieba.posseg as pseg
 import wordcloud,tkinter

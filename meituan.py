@@ -1,6 +1,5 @@
 # coding=utf-8
 # 功能： 编写 python 爬虫程序，爬取美团网站的信息，存入本地csv文件中。
-# 编写者：俺
 # 日期：2023年6月6日
 
 import csv, urllib.request, re, requests, os  # 导入模块

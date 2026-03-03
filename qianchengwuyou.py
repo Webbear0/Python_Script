@@ -1,6 +1,6 @@
 #coding=utf-8
 # 功能:爬前程无忧网站
-# 创建者:俺
+# 日期：2023年6月6日
 import csv,urllib.request,re,requests,os # 导入模块
 
 def qianchengwuyou(job_name, pages,cookie):

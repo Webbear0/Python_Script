@@ -1,6 +1,6 @@
 #coding=utf-8
 # 功能: 爬取喜马拉雅
-# 创建者：俺
+# 日期：2023年6月6日
 import requests,re,os
 
 def ximalaya(book_id):

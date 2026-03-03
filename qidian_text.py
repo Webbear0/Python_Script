@@ -1,6 +1,6 @@
 #coding=utf-8
 # 功能：编写 python 爬虫程序，爬取任意一个小说网站中的健康的一本小说内容
-# 编写者：俺
+# 日期：2023年6月6日
 import requests,os,re,time
 
 # 1、请求小说首页、获取id和标题
