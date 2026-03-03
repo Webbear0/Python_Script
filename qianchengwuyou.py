@@ -12,11 +12,11 @@ def qianchengwuyou(job_name, pages,cookie):
         csv_w = csv.DictWriter(f, fieldnames=['岗位', '公司', '学历', '工作经验', '月薪', '待遇', '岗位链接'])
         csv_w.writeheader()  # 写入标题
         
+        job_name_encoded = urllib.parse.quote(job_name)  # 将汉字编码为URL编码（移到循环外，避免重复编码）
         for page in range(1,pages+1):
-            job_name = urllib.parse.quote(job_name)  # 将汉字编码为URL编码
-            url = f'https://we.51job.com/api/job/search-pc?api_key=51job&timestamp=1685494731&\
-keyword={job_name}&searchType=2&function=&industry=&jobArea=000000&jobArea2=&landmark=&metro=&salary=&workYear=&degree=&companyType=&companySize=&jobType=&issueDate=&sortType=0&\
-pageNum={page}&requestId=b340935dc543bf27150fc65f985b9757&pageSize=20&source=1&accountId=211428919&pageCode=sou%7Csou%7Csoulb&u_atoken=d93ec7ff-3026-4392-b362-07d78723002b&u_asession=01AUV9y6IguLvqDAGId08zrHovErSJeeB_HbJnqBHkLzK5b35qq4czJHtkC-Ay17lAX0KNBwm7Lovlpxjd_P_q4JsKWYrT3W_NKPr8w6oU7K9p-zYy0ZLGdoA3rDHy3m-fYAieK8g9kWtgqoeh4E6vb2BkFo3NEHBv0PZUm6pbxQU&u_asig=05NvLLX17Yh0EcOR5Ex57VXRCAQi0EGynecsTtDEtbSMW2rG_343uvZ2KCEvHwIKrTLwqZoHDSwQF1sk-eOeQ2_KIvZ3YTQk-7ZJljFJoiVLX_PAyMrYq5of0E-gEyQWzzImDM0HP0PFoNd8lR9HcgThidLPn14g3tA7bnsYv5yST9JS7q8ZD7Xtz2Ly-b0kmuyAKRFSVJkkdwVUnyHAIJzUGQ_GOuXo4W_Wm4v7LblNqgn5Nto23N5_HqN8mmxRykLTc6IvlIB0PEAiUn81TNPu3h9VXwMyh6PgyDIVSG1W9-EL58he-HABy_Tqg7XJMd6UBi2EXEzpguGgi5tijWlgb4amiDmymU7j5ycviTotX16iDsF45IyWhB4G5Jof6QmWspDxyAEEo4kbsryBKb9Q&u_aref=vnsqyUGxBSxhDhu65tyUYE3ZDlc%3D'
+            url = f'https://we.51job.com/api/job/search-pc?api_key=51job&timestamp=1685494731&'\
+f'keyword={job_name_encoded}&searchType=2&function=&industry=&jobArea=000000&jobArea2=&landmark=&metro=&salary=&workYear=&degree=&companyType=&companySize=&jobType=&issueDate=&sortType=0&'\
+f'pageNum={page}&pageSize=20&source=1&pageCode=sou%7Csou%7Csoulb'
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebK:it/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
                 'cookie' : cookie,

@@ -9,7 +9,6 @@ def ximalaya(book_id):
     url=f"https://www.ximalaya.com/album/{book_id}"
     response=requests.get(url=url, headers=headers)
     audia_info=re.findall('"trackId":(\d+),"isPaid":false,"tag":0,"title":"(.*?)","playCount"', response.text)
-    os.makedirs(f"ximalaya\\{book_id}")
     try:
         os.makedirs(f"ximalaya\\{book_id}")
     except Exception as e:

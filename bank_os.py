@@ -95,7 +95,7 @@ class bank:
             cr.close()
             self.db_conn.close()
             exit(1)
-        print(f'用户{self.card_name}存款 {self.card_money}元 成功')
+        print(f'用户{card_name}存款 {card_money}元 成功')
         cr.close()
         self.db_conn.close()
 

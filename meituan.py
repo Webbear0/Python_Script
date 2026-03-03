@@ -27,24 +27,24 @@ def meituan(name, pages, cookie_main, cookie_page):
                                    '<em class="star-text">(.*?)</em>.*?'
                                    '<a class="" onclick="return false;" href="//i.meituan.com/nanning.*?">(.*?)</a>',
                                    response.text, re.S)
-        headers['cookie'] = cookie_page
-        for dianming in dianmings:
-            link = dianming[0]
-            print(link)
-            renjun_pingjia = requests.get(url=link, headers=headers)
-            r_p = re.findall('人均：¥<!-- /react-text --><!-- react-text: 65 -->(\d+)<!-- /react-text -->.*?'
-                             '<!-- react-text: \d+ -->(\d+)<!-- /react-text --><!-- react-text: \d+ -->',renjun_pingjia.text, re.S)
-            try:
-                csv_w.writerow({
-                    '店名': dianming[1],
-                    '路名': dianming[-1],
-                    '评价': dianming[-2],
-                    '人均消费': r_p[0][0],
-                    '评价数': r_p[0][1],
-                    '详情链接': dianming[0]
-                })
-            except Exception as e:
-                print(e)
+            headers['cookie'] = cookie_page
+            for dianming in dianmings:
+                link = dianming[0]
+                print(link)
+                renjun_pingjia = requests.get(url=link, headers=headers)
+                r_p = re.findall(r'人均：¥<!-- /react-text --><!-- react-text: 65 -->(\d+)<!-- /react-text -->.*?'
+                                 r'<!-- react-text: \d+ -->(\d+)<!-- /react-text --><!-- react-text: \d+ -->',renjun_pingjia.text, re.S)
+                try:
+                    csv_w.writerow({
+                        '店名': dianming[1],
+                        '路名': dianming[-1],
+                        '评价': dianming[-2],
+                        '人均消费': r_p[0][0],
+                        '评价数': r_p[0][1],
+                        '详情链接': dianming[0]
+                    })
+                except Exception as e:
+                    print(e)
     print(f"爬取完成")
 if __name__ == "__main__":
     name = input("请输入需要查找的参数:")
