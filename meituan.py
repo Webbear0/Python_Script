@@ -48,7 +48,7 @@ def meituan(name, pages, cookie_main, cookie_page):
     print(f"爬取完成")
 if __name__ == "__main__":
     name = input("请输入需要查找的参数:")
-    pages = eval(input("请输入需要爬取的页面数量:"))
+    pages = int(input("请输入需要爬取的页面数量:"))
     cookie_main = input("请输入登录(i.meituan.com/)后的cookie:\n")
     cookie_page = input("请输入页面(meishi.meituan.com/i/poi/)的cookie:\n")
     meituan(name, pages, cookie_main, cookie_page)

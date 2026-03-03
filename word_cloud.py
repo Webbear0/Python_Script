@@ -11,10 +11,10 @@ def word_cloud(file_name, font_name, img_width, img_height):
     wtimes = {}
     cstr = []
     sw = []
-    str = file.read()
+    text_content = file.read()
     file.close()
 
-    wlist = pseg.lcut(str)
+    wlist = pseg.lcut(text_content)
     for a in wlist:
         if a.flag == 'nr':
             wtimes[a.word] = wtimes.get(a.word, 0) + 1
@@ -45,6 +45,6 @@ if __name__ == "__main__":
     # 使用前请将txt格式文档与ttc格式字体保存到程序目录中
     file_name = input('请输入需要转换的文档名:')
     font_name = input('请输入字体的文件名:')
-    img_width = int(input('请输入转换的图片高度:'))
-    img_height = int(input('请输入转换的图片宽度:'))
+    img_width = int(input('请输入转换的图片宽度:'))
+    img_height = int(input('请输入转换的图片高度:'))
     word_cloud(file_name, font_name, img_width, img_height)

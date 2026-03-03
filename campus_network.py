@@ -42,50 +42,46 @@ class campus_network:
             print("输入的值不能为空")
         elif (len(user_name) <= 9) or (len(user_password) <= 17):
             cr = self.db_conn.cursor()
-            search_sql = f"select user_name from `{self.database}` \
-            where user_name='{user_name}' and user_password='{user_password}';"
-            try: # 查询数据库中账号密码是否对应
-                cr.execute(search_sql)
-                result=cr.execute(search_sql)
+            search_sql = "select user_name from `%s` where user_name=%%s and user_password=%%s;" % self.database
+            try: # 查询数据库中账号密码是否对应（使用参数化查询防止SQL注入）
+                cr.execute(search_sql, (user_name, user_password))
+                result = cr.rowcount
             except Exception as error:
                 print(f"查询错误{error}")
-                exit(1)
-            if str(result) == "1" :
+                cr.close()
+                return
+            if result >= 1:
                 print(f"\n用户 {user_name} 已存在")
-                cr.close()
-            elif str(result) == "0":
-                create_sql = f"insert ignore into `{self.database}`(`user_name`,`user_password`)values ('{user_name}','{user_password}');"
-                cr.execute(create_sql)
+            elif result == 0:
+                create_sql = "insert ignore into `%s`(`user_name`,`user_password`)values (%%s,%%s);" % self.database
+                cr.execute(create_sql, (user_name, user_password))
                 self.db_conn.commit()
-                cr.close()
-                self.db_conn.close()
                 print("注册成功") 
             else:
                 print(f"未知错误{result}")
+            cr.close()
         else:
             print('输入的值错误，请重新输入')
 
     def login_user(self):
         print("\n————登录系统————")
-        result = 2
         user_name = input('请输入用户名:')
         user_password = input('请输入密码:')
         cr = self.db_conn.cursor()
-        search_sql = f"select user_name from `{self.database}` \
-            where user_name='{user_name}' and user_password='{user_password}';"
-        try: # 查询数据库中账号密码是否对应
-            cr.execute(search_sql)
-            result=cr.execute(search_sql)
+        search_sql = "select user_name from `%s` where user_name=%%s and user_password=%%s;" % self.database
+        try: # 查询数据库中账号密码是否对应（使用参数化查询防止SQL注入）
+            cr.execute(search_sql, (user_name, user_password))
+            result = cr.rowcount
         except Exception as error:
             print(f"查询错误{error}")
-        if str(result) == "0" :
+            cr.close()
+            return
+        if result == 0:
             print(f"\n用户 {user_name} 不存在请重新输入")
-        elif str(result) == "1":
+        elif result >= 1:
             print(f"\n用户 {user_name} 登录成功")
         else:
             print("未知错误")
-            cr.close()
-            exit(1)
         cr.close()
 
 if __name__ == '__main__':

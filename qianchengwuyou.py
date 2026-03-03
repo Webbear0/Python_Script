@@ -40,6 +40,6 @@ f'pageNum={page}&pageSize=20&source=1&pageCode=sou%7Csou%7Csoulb'
 
 if __name__ == "__main__" :
     job_name = input("请输入需要查找的职位名称:")
-    pages = eval(input("请输入需要爬取的页面数量:"))
+    pages = int(input("请输入需要爬取的页面数量:"))
     cookie = input("请输入登录后的cookie:\n")
     qianchengwuyou(job_name,pages,cookie)

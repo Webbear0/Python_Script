@@ -44,21 +44,18 @@ class bank:
             print("输入的值不能为空")
         elif (len(card_name) <= 9) or (len(card_password) <= 17):
             cr = self.db_conn.cursor()
-            create_sql = f"insert ignore into `{self.database}` (`card_name`,`card_password`) \
-                        values ('{card_name}','{card_password}');"
+            create_sql = "insert ignore into `%s` (`card_name`,`card_password`) values (%%s,%%s);" % self.database
             try:
-                # 添加数据
-                cr.execute(create_sql)
+                # 添加数据（使用参数化查询防止SQL注入）
+                cr.execute(create_sql, (card_name, card_password))
                 self.db_conn.commit()
             except Exception as error:
                 if str(error)[1] == "0":
                     print(f"开户失败，用户已经注册过了 错误代码 {str(error)[1]}")
-                    cr.close()
-                    exit(1)
                 else:
                     print(f"未知错误 错误代码 {error}")
-                    cr.close()
-                    exit(1)
+            finally:
+                cr.close()
         else:
             print('输入的值错误，请重新输入')
 
@@ -67,17 +64,15 @@ class bank:
         card_name = input('请输入销户用户名')
         card_password = input('请输入密码')
         cr = self.db_conn.cursor()
-        delete_sql = f"delete from `{self.database}` \
-            where card_name='{card_name}' and card_password='{card_password}' and card_money=0;"
-        # 删除数据
-        result = cr.execute(delete_sql)
+        delete_sql = "delete from `%s` where card_name=%%s and card_password=%%s and card_money=0;" % self.database
+        # 删除数据（使用参数化查询防止SQL注入）
+        result = cr.execute(delete_sql, (card_name, card_password))
         self.db_conn.commit()
         if result == 0:
             print('销户失败,请检查输入')
-            cr.close()
-            self.db_conn.close()
-            exit(1)
-        print(f'用户 {card_name} 销户成功')
+        else:
+            print(f'用户 {card_name} 销户成功')
+        cr.close()
 
     def save_money(self):
         print("————存款系统————")
@@ -85,59 +80,46 @@ class bank:
         card_password = input('请输入密码')
         card_money = input('请输入存款金额')
         cr = self.db_conn.cursor()
-        save_sql = f"update `{self.database}` set card_money=card_money+{card_money} \
-            where card_name='{card_name}' and card_password='{card_password}';"
-        # 余额加上输入的金额
-        result = cr.execute(save_sql)
+        save_sql = "update `%s` set card_money=card_money+%%s where card_name=%%s and card_password=%%s;" % self.database
+        # 余额加上输入的金额（使用参数化查询防止SQL注入）
+        result = cr.execute(save_sql, (card_money, card_name, card_password))
         self.db_conn.commit()
         if result == 0:
             print('存款失败,请检查输入')
-            cr.close()
-            self.db_conn.close()
-            exit(1)
-        print(f'用户{card_name}存款 {card_money}元 成功')
+        else:
+            print(f'用户{card_name}存款 {card_money}元 成功')
         cr.close()
-        self.db_conn.close()
 
     def get_money(self):
         print("————取款系统————")
         card_name = input('请输入用户名')
         card_password = input('请输入密码')
-        card_money = input('请输入存款金额')
+        card_money = input('请输入取款金额')
         cr = self.db_conn.cursor()
-        get_sql = f"update `{self.database}` set card_money=card_money-{card_money} \
-            where card_name='{card_name}' and card_password='{card_password}';"
-        # 余额减去输入的金额
-        result = cr.execute(get_sql)
+        get_sql = "update `%s` set card_money=card_money-%%s where card_name=%%s and card_password=%%s;" % self.database
+        # 余额减去输入的金额（使用参数化查询防止SQL注入）
+        result = cr.execute(get_sql, (card_money, card_name, card_password))
         self.db_conn.commit()
         if result == 0:
             print('取款失败,请检查输入')
-            cr.close()
-            self.db_conn.close()
-            exit(1)
-        print(f'用户{card_name}取款 {card_money}元 成功')
+        else:
+            print(f'用户{card_name}取款 {card_money}元 成功')
         cr.close()
-        self.db_conn.close()
 
     def search_money(self):
         print("————查询系统————")
         card_name = input('请输入查询用户名')
         card_password = input('请输入密码')
         cr = self.db_conn.cursor()
-        search_sql = f"select card_money from `{self.database}` \
-            where card_name='{card_name}' and card_password='{card_password}';"
-        # 查询数据库
+        search_sql = "select card_money from `%s` where card_name=%%s and card_password=%%s;" % self.database
+        # 查询数据库（使用参数化查询防止SQL注入）
         try:
-            cr.execute(search_sql)
+            cr.execute(search_sql, (card_name, card_password))
             result = cr.fetchall()
             print(f"用户 {card_name} 的余额为 {result[0]}元")
         except:
             print('查询失败,用户不存在')
-            cr.close()
-            self.db_conn.close()
-            exit(1)
         cr.close()
-        self.db_conn.close()
 
 
 if __name__ == '__main__':
