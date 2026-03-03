@@ -3,7 +3,7 @@
 # 编写者：俺
 import paramiko,time
 
-def ssh(hostname, username, password, ):
+def ssh(hostname, username, password):
     command = input('请输入需要执行的命令:')
     # 通过类SSHClint创建一个SSH_Client客户端对象
     SSH_Client = paramiko.SSHClient()

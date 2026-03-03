@@ -27,7 +27,7 @@ class bank:
         create_table = f"create table if not exists {database}(`card_id` int(8) zerofill not null unique key auto_increment comment '卡号',\
             `card_name` varchar(8) not null primary key comment '持卡人',\
             `card_password` varchar(16) not null default '88888888' comment '卡密码',\
-            `card_money` float(32) not null default 0 comment '余额')charset=utf8;"
+            `card_money` decimal(10,2) not null default 0 comment '余额')charset=utf8;"
         cr.execute(create_table) # 连接成功后创建数据库和数据表
         cr.close()
         db_conn.close()

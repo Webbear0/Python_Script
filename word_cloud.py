@@ -7,12 +7,11 @@ import wordcloud,tkinter
 from PIL import Image, ImageTk
 
 def word_cloud(file_name, font_name, img_width, img_height):
-    file = open(f'{file_name}', encoding='utf-8')
+    with open(f'{file_name}', encoding='utf-8') as file:
+        text_content = file.read()
     wtimes = {}
     cstr = []
     sw = []
-    text_content = file.read()
-    file.close()
 
     wlist = pseg.lcut(text_content)
     for a in wlist:

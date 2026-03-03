@@ -16,8 +16,8 @@ def qingting(book_id,page,access_token,qingting_id) :
     except Exception as e:
         print(f"{book_id} 文件夹已存在\n{e}")
 
-    for page in range(1,page+1):
-        url=f'https://www.qingting.fm/channels/{book_id}/{page}'
+    for pg in range(1,page+1):
+        url=f'https://www.qingting.fm/channels/{book_id}/{pg}'
         response=requests.get(url=url,headers=headers)
         audio_id=re.findall('"id":(\d+),"title":"(.*?)","duration"',response.text)
         # 爬取多页结果 保存到变量
@@ -38,7 +38,7 @@ def qingting(book_id,page,access_token,qingting_id) :
             except Exception as e:
                 print(f"{title} 下载失败 原因：\n{e}")
                 continue
-        print(f'{book_id} 第{page}页 下载完成......')
+        print(f'{book_id} 第{pg}页 下载完成......')
 
 if __name__ == "__main__" :
     bookid = int(input("请输入节目号(节目的url里有)\n:"))

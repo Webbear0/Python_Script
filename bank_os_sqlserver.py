@@ -14,7 +14,7 @@ class BankSystem:
             self.conn = pyodbc.connect(
                 f'DRIVER={{SQL Server}};'
                 f'SERVER={server};'
-                f'DATABASE=bankos;'
+                f'DATABASE=master;'
                 f'UID={user};'
                 f'PWD={password};'
             )

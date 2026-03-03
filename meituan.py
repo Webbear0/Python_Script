@@ -6,12 +6,13 @@
 import csv, urllib.request, re, requests, os  # 导入模块
 
 def meituan(name, pages, cookie_main, cookie_page):
+    original_name = name  # 保存原始名称用于文件命名
     name = urllib.parse.quote(name)
     try:
         os.makedirs("美团\\")
     except Exception as e:
         print(f"文件夹已创建\n{e}")
-    with open(f'美团\\{name}.csv', mode='a', encoding='utf-8', newline='') as f:
+    with open(f'美团\\{original_name}.csv', mode='a', encoding='utf-8', newline='') as f:
         csv_w = csv.DictWriter(f, fieldnames=['店名', '路名', '评价', '人均消费', '评价数', '详情链接'])
         csv_w.writeheader()
 
