@@ -1,6 +1,5 @@
 #coding=utf-8
 #功能：Flask创建网页
-#编写者：俺
 
 # 导入flask库的类 Flask
 from flask import Flask,render_template

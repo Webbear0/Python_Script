@@ -1,0 +1,9 @@
+pymysql
+pyodbc
+requests
+paramiko
+jieba
+wordcloud
+Pillow
+flask
+django

@@ -1,10 +1,3 @@
-# django运行项目  
-`pip install django`  
-`django statrproject {项目名称}`  
-`cd {项目名称}`  
-`python manage.py startapp {应用名称}`  
-`python manage.py runserver`  
-
 # flask运行项目  
 `pip install flask`  
 `mkdir {项目名称}`  
